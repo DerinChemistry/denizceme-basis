@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Denizceme Basış</title> <!-- Sitenin adı güncellendi -->
+    <title>Denizceme Basış</title>
     <style>
         /* CSS Kodları Buraya */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap'); /* Inter fontu import edildi */
@@ -107,6 +107,18 @@
             display: flex;
         }
 
+        /* Yeni Ana Başlık Stili */
+        .main-title {
+            font-size: 2.5em; /* Büyük başlık */
+            font-weight: 800;
+            color: #f0f0f0;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8); /* Daha parlak gölge */
+            margin-bottom: 20px; /* Sayaçtan boşluk */
+            text-align: center;
+            width: 100%;
+        }
+
+
         /* Sayaçların yeni konumu ve stili (tek sayaç için ortalandı) */
         .top-counters {
             width: 100%;
@@ -116,7 +128,7 @@
             box-sizing: border-box;
             font-size: 1.3em; /* Yazı boyutu büyütüldü */
             font-weight: 800; /* Daha da kalın */
-            margin-top: 20px; /* Yukarıdan boşluk */
+            margin-top: 0px; /* Başlığın hemen altında */
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.6); /* Parlaklık efekti */
         }
 
@@ -137,11 +149,12 @@
             padding: 20px 0; /* Üst ve alttan boşluk */
             width: 100%; /* Resim alanının genişlemesini sağla */
             height: 100%; /* Resim alanının yüksekliğini esnet */
+            min-height: 300px; /* Resim alanı için minimum yükseklik */
         }
 
         #denizcemImage {
-            max-width: 100%; /* Kapsayıcısına sığsın */
-            max-height: 100%; /* Kapsayıcısına sığsın */
+            max-width: 90%; /* Kapsayıcısının %90'ı kadar olsun */
+            max-height: 90%; /* Kapsayıcısının %90'ı kadar olsun */
             width: auto;     /* Oranını koru */
             height: auto;    /* Oranını koru */
             border: none; /* Halka tamamen kaldırıldı */
@@ -288,6 +301,9 @@
 
         /* Duyarlı tasarım */
         @media (max-width: 768px) {
+            .main-title {
+                font-size: 2em;
+            }
             .top-counters {
                 flex-direction: column;
                 align-items: center;
@@ -316,6 +332,9 @@
         }
 
         @media (max-width: 480px) {
+            .main-title {
+                font-size: 1.8em;
+            }
             #denizcemImage {
                 max-width: 220px; /* Daha küçük mobil cihazlar için */
                 height: auto;
@@ -354,6 +373,9 @@
 
     <!-- Ana İçerik (Gizli Başlar) -->
     <div class="container">
+        <!-- Yeni Ana Başlık -->
+        <h1 class="main-title">Denizceme Basış!</h1>
+
         <!-- Kişisel Sayaç için konumlandırma -->
         <div class="top-counters">
             <p class="counter-item">Denizceme Basma Sayısı: <span id="personalClickCount">0</span></p>
@@ -366,7 +388,7 @@
         <!-- Alt Kısım Butonları -->
         <div class="bottom-actions">
             <button id="restartButton" class="action-button">Yeniden Başla</button>
-            <a href="https://www.patreon.com/your_profile" target="_blank" class="action-button donate-button">Bana Destek Ol!</a>
+            <a href="https://www.patreon.com/c/derinchemistry" target="_blank" class="action-button donate-button">Bana Destek Ol!</a>
         </div>
     </div>
 
