@@ -1,0 +1,120 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #1a1a1a; /* Koyu arka plan */
+    color: #f0f0f0; /* Açık renk yazı */
+    overflow: hidden; /* Overlay için kaydırmayı engelle */
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Yarı şeffaf siyah */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(8px); /* Blur efekti */
+    z-index: 1000; /* En üstte görünmesini sağla */
+    transition: backdrop-filter 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+.overlay.hidden {
+    backdrop-filter: blur(0px);
+    opacity: 0;
+    pointer-events: none; /* Gizlendiğinde tıklamaları engelle */
+}
+
+.message-box {
+    background-color: #333;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.message-box h1 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+#startButton {
+    background-color: #4CAF50; /* Yeşil buton */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+}
+
+#startButton:hover {
+    background-color: #45a049;
+}
+
+.container {
+    text-align: center;
+    display: none; /* Başlangıçta gizli, 'Başla' butonuna basınca görünecek */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    max-width: 800px;
+}
+
+.container.active {
+    display: flex;
+}
+
+.counters {
+    margin-bottom: 30px;
+    font-size: 1.2em;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.counters p {
+    margin: 10px;
+}
+
+.image-area {
+    margin-top: 20px;
+}
+
+#denizcemImage {
+    width: 250px; /* Resim boyutu */
+    height: 250px;
+    border-radius: 50%; /* Yuvarlak resim */
+    cursor: pointer;
+    border: 5px solid #555;
+    transition: transform 0.1s ease-out; /* Tıklama efekti için */
+    user-select: none; /* Tıklarken seçimi engelle */
+}
+
+#denizcemImage:active {
+    transform: scale(0.95); /* Tıklayınca küçülme efekti */
+}
+
+/* Duyarlı tasarım */
+@media (max-width: 600px) {
+    .counters {
+        flex-direction: column;
+    }
+    #denizcemImage {
+        width: 200px;
+        height: 200px;
+    }
+    .message-box h1 {
+        font-size: 1.2em;
+    }
+}
