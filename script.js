@@ -1,318 +1,102 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap'); /* Inter fontu import edildi */
+document.addEventListener('DOMContentLoaded', () => {
+    // HTML elementlerini al
+    const overlay = document.getElementById('overlay');
+    const startButton = document.getElementById('startButton');
+    const container = document.querySelector('.container');
+    const denizcemImage = document.getElementById('denizcemImage');
+    const personalClickCountSpan = document.getElementById('personalClickCount');
+    const restartButton = document.getElementById('restartButton');
+    const donateButton = document.querySelector('.donate-button'); // Bağış butonu
 
-body {
-    margin: 0;
-    font-family: 'Inter', sans-serif; /* Inter fontu kullanıldı */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #1a1a1a; /* Koyu arka plan */
-    color: #f0f0f0; /* Parlak renk yazı */
-    overflow: hidden; /* Overlay için kaydırmayı engelle */
-    position: relative;
-}
+    // Onay modalı elementleri
+    const confirmModal = document.getElementById('confirmModal');
+    const confirmYesButton = document.getElementById('confirmYes');
+    const confirmNoButton = document.getElementById('confirmNo');
 
-/* Genel yuvarlak köşeler */
-.rounded-lg {
-    border-radius: 0.5rem; /* 8px */
-}
+    // Kişisel tıklama sayısını localStorage'dan al (tarayıcı kapansa da kalıcı)
+    let personalClickCount = localStorage.getItem('personalClickCountDenizcem') || 0;
+    personalClickCountSpan.textContent = personalClickCount;
 
-/* Overlay ve mesaj kutusu */
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8); /* Yarı şeffaf siyah */
-    display: flex; /* Varsayılan olarak görünür */
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(8px); /* Blur efekti */
-    z-index: 1000; /* En üstte görünmesini sağla */
-    opacity: 1; /* Varsayılan olarak tam görünür */
-    pointer-events: auto; /* Varsayılan olarak tıklanabilir */
-    transition: backdrop-filter 0.5s ease-out, opacity 0.5s ease-out;
-}
+    // Sayfa yüklendiğinde, eğer daha önce başlanmışsa overlay'i gizle
+    // Aksi takdirde overlay'i göster ve ana içeriği gizle
+    if (localStorage.getItem('startedDenizcemClicker')) {
+        overlay.classList.add('hidden');
+        overlay.style.pointerEvents = 'none';
+        overlay.style.display = 'none'; // Direkt gizle
 
-.overlay.hidden {
-    backdrop-filter: blur(0px);
-    opacity: 0;
-    pointer-events: none; /* Gizlendiğinde tıklamaları engelle */
-}
+        container.classList.add('active');
+        container.style.display = 'flex'; // Container'ı göster
+    } else {
+        // İlk kez geliyorsa veya yeniden başlatıldıysa overlay'i göster
+        overlay.style.display = 'flex';
+        overlay.classList.remove('hidden');
+        overlay.style.pointerEvents = 'auto';
 
-.message-box {
-    background-color: #333;
-    padding: 30px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    border: 1px solid #555; /* Hafif kenarlık */
-}
-
-.message-box h1 {
-    font-size: 1.5em;
-    margin-bottom: 20px;
-    color: #fff;
-    font-weight: 700; /* Daha kalın */
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5); /* Parlaklık efekti */
-}
-
-#startButton {
-    background-color: #4CAF50; /* Yeşil buton */
-    color: white;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.1em;
-    font-weight: 700; /* Daha kalın */
-    transition: background-color 0.3s ease, transform 0.1s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-}
-
-#startButton:hover {
-    background-color: #45a049;
-    transform: translateY(-2px);
-}
-
-#startButton:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
-}
-
-/* Ana içerik */
-.container {
-    display: none; /* Başlangıçta gizli, 'Başla' butonuna basınca görünecek */
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between; /* İçeriği dikeyde yay */
-    width: 90%;
-    max-width: 800px;
-    min-height: 100vh; /* Tüm ekranı kaplasın */
-    padding: 20px; /* İç boşluk */
-    box-sizing: border-box; /* Padding'i genişliğe dahil et */
-}
-
-.container.active {
-    display: flex;
-}
-
-/* Sayaçların yeni konumu ve stili (tek sayaç için ortalandı) */
-.top-counters {
-    width: 100%;
-    display: flex;
-    justify-content: center; /* Ortalandı */
-    padding: 0 20px; /* Yanlardan boşluk */
-    box-sizing: border-box;
-    font-size: 1.3em; /* Yazı boyutu büyütüldü */
-    font-weight: 800; /* Daha da kalın */
-    margin-top: 20px; /* Yukarıdan boşluk */
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.6); /* Parlaklık efekti */
-}
-
-.counter-item {
-    background-color: #333;
-    padding: 15px 25px; /* Padding artırıldı */
-    border-radius: 10px; /* Yuvarlak köşeler */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    border: 1px solid #555;
-    white-space: nowrap; /* Metnin tek satırda kalmasını sağlar */
-}
-
-.image-area {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1; /* Ortada kalmasını sağlar */
-    padding: 20px 0; /* Üst ve alttan boşluk */
-}
-
-#denizcemImage {
-    max-width: 500px; /* Resmin maksimum genişliği daha da büyütüldü */
-    height: auto;    /* Oranını koru, sıkışmayı engelle */
-    border: none; /* Halka tamamen kaldırıldı */
-    cursor: pointer;
-    transition: transform 0.1s ease-out, box-shadow 0.2s ease; /* Tıklama efekti için */
-    user-select: none; /* Mobilde görsel seçmeyi engelle */
-    border-radius: 0; /* Köşeler kare olsun diye kaldırıldı */
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6); /* Daha belirgin gölge */
-}
-
-#denizcemImage:active {
-    transform: scale(0.97); /* Tıklayınca hafif küçülme efekti */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-}
-
-/* Alt Kısım Butonları */
-.bottom-actions {
-    display: flex;
-    gap: 20px; /* Butonlar arası boşluk */
-    margin-bottom: 20px; /* Alttan boşluk */
-    flex-wrap: wrap; /* Küçük ekranlarda alt alta gelsin */
-    justify-content: center;
-}
-
-.action-button {
-    background-color: #f44336; /* Kırmızı buton (Yeniden Başla) */
-    color: white;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.1em;
-    font-weight: 700; /* Daha kalın */
-    transition: background-color 0.3s ease, transform 0.1s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    text-decoration: none; /* Linkler için alt çizgiyi kaldır */
-    display: inline-flex; /* İçerik ortalamak için */
-    align-items: center;
-    justify-content: center;
-}
-
-.action-button:hover {
-    background-color: #da190b;
-    transform: translateY(-2px);
-}
-
-.action-button:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
-}
-
-.donate-button {
-    background-color: #FFC107; /* Sarı buton (Bağış) */
-    color: #333; /* Koyu yazı */
-}
-
-.donate-button:hover {
-    background-color: #e0a800;
-}
-
-/* Onay Modalı Stilleri */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* Yarı şeffaf siyah */
-    display: none; /* Başlangıçta gizli */
-    justify-content: center;
-    align-items: center;
-    z-index: 2000; /* En üstte olsun */
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.modal-overlay.visible {
-    display: flex;
-    opacity: 1;
-}
-
-.modal-content {
-    background-color: #333;
-    padding: 30px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
-    border: 1px solid #666;
-    max-width: 400px;
-    width: 90%;
-    color: #f0f0f0;
-}
-
-.modal-content h2 {
-    margin-top: 0;
-    font-size: 1.8em;
-    font-weight: 700;
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
-}
-
-.modal-content p {
-    font-size: 1.1em;
-    margin-bottom: 25px;
-}
-
-.modal-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-
-.modal-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: 700;
-    transition: background-color 0.3s ease, transform 0.1s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.modal-button.yes-button {
-    background-color: #f44336; /* Kırmızı */
-    color: white;
-}
-
-.modal-button.yes-button:hover {
-    background-color: #da190b;
-    transform: translateY(-2px);
-}
-
-.modal-button.no-button {
-    background-color: #4CAF50; /* Yeşil */
-    color: white;
-}
-
-.modal-button.no-button:hover {
-    background-color: #45a049;
-    transform: translateY(-2px);
-}
-
-
-/* Duyarlı tasarım */
-@media (max-width: 768px) {
-    .top-counters {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        font-size: 1.1em;
-        padding: 0 10px;
+        container.style.display = 'none'; // Ana içeriği gizle
+        container.classList.remove('active');
     }
-    .counter-item {
-        width: 100%;
-        text-align: center;
-        padding: 10px 15px;
-    }
-    #denizcemImage {
-        max-width: 280px; /* Mobil için maksimum genişlik */
-        height: auto;
-        margin-top: 60px; /* Sayaçlar için daha fazla boşluk */
-    }
-    .message-box h1 {
-        font-size: 1.1em;
-        padding: 0 10px;
-    }
-    .bottom-actions {
-        flex-direction: column;
-        gap: 10px;
-    }
-}
 
-@media (max-width: 480px) {
-    #denizcemImage {
-        max-width: 220px; /* Daha küçük mobil cihazlar için */
-        height: auto;
-        margin-top: 40px;
-    }
-    .message-box h1 {
-        font-size: 1em;
-    }
-    #startButton, .action-button, .modal-button {
-        padding: 10px 20px;
-        font-size: 1em;
-    }
-}
+    // "Başla" butonuna tıklanınca
+    startButton.addEventListener('click', () => {
+        // Overlay'i gizle ve tıklama olaylarını engelle
+        overlay.classList.add('hidden');
+        overlay.style.pointerEvents = 'none';
+
+        // Ana içeriği göster
+        container.classList.add('active');
+        container.style.display = 'flex'; // Display'i flex olarak ayarla
+
+        // Geçiş bittikten sonra overlay'i tamamen gizle
+        setTimeout(() => {
+            overlay.style.display = 'none';
+        }, 550); // CSS geçiş süresinden biraz daha uzun
+
+        // Kullanıcının siteye başladığını işaretle
+        localStorage.setItem('startedDenizcemClicker', 'true');
+    });
+
+    // Denizcem resmine tıklanınca
+    denizcemImage.addEventListener('click', () => {
+        // Kişisel sayacı artır ve güncelle
+        personalClickCount++;
+        personalClickCountSpan.textContent = personalClickCount;
+        localStorage.setItem('personalClickCountDenizcem', personalClickCount);
+
+        // Tıklama animasyonu
+        denizcemImage.style.transform = 'scale(0.97)';
+        setTimeout(() => {
+            denizcemImage.style.transform = 'scale(1)';
+        }, 100);
+    });
+
+    // "Yeniden Başla" butonuna tıklanınca (Onay modalını göster)
+    restartButton.addEventListener('click', () => {
+        confirmModal.classList.add('visible'); // Modalı görünür yap
+    });
+
+    // Onay modalındaki "Evet, eminim" butonuna tıklanınca
+    confirmYesButton.addEventListener('click', () => {
+        // Kişisel sayacı sıfırla ve localStorage'dan sil
+        personalClickCount = 0;
+        personalClickCountSpan.textContent = personalClickCount;
+        localStorage.removeItem('personalClickCountDenizcem');
+        localStorage.removeItem('startedDenizcemClicker'); // Başlangıç ekranına dönmek için
+
+        // Modalı gizle
+        confirmModal.classList.remove('visible');
+
+        // Ana içeriği gizle
+        container.classList.remove('active');
+        container.style.display = 'none';
+
+        // Overlay'i tekrar göster (blur efektiyle birlikte)
+        overlay.style.display = 'flex';
+        overlay.classList.remove('hidden'); // Gizli sınıfını kaldır
+        overlay.style.pointerEvents = 'auto'; // Tıklama olaylarını tekrar etkinleştir!
+    });
+
+    // Onay modalındaki "Hayır, vazgeçtim" butonuna tıklanınca
+    confirmNoButton.addEventListener('click', () => {
+        confirmModal.classList.remove('visible'); // Modalı gizle
+    });
+});
