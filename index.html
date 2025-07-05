@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Denizceme Basış</title> <!-- Sitenin adı güncellendi -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Açılış Mesajı ve Başla Butonu -->
+    <div class="overlay" id="overlay">
+        <div class="message-box">
+            <h1>Bu site eğlence amaçlıdır. Kimseyle dalga falan geçilmemiştir.</h1>
+            <button id="startButton">Başla</button>
+        </div>
+    </div>
+
+    <!-- Ana İçerik (Gizli Başlar) -->
+    <div class="container">
+        <!-- Sayaçlar için yeni konumlandırma -->
+        <div class="top-counters">
+            <p class="counter-item">Denizceme Basma Sayısı: <span id="personalClickCount">0</span></p>
+            <p class="counter-item">Denizceme Toplam Basma Sayısı: <span id="totalClickCount">0</span></p>
+        </div>
+
+        <div class="image-area">
+            <img src="denizcem.png" alt="Denizcem'e Tıkla" id="denizcemImage">
+        </div>
+
+        <!-- Alt Kısım Butonları -->
+        <div class="bottom-actions">
+            <button id="restartButton" class="action-button">Yeniden Başla</button>
+            <a href="https://www.patreon.com/your_profile" target="_blank" class="action-button donate-button">Bana Destek Ol!</a>
+        </div>
+    </div>
+
+    <!-- JavaScript Dosyası -->
+    <script type="module" src="script.js"></script>
+</body>
+</html>
