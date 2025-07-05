@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Denizceme Basış</title> <!-- Sitenin adı güncellendi -->
+    <title>Denizceme Basış</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,12 +15,23 @@
         </div>
     </div>
 
+    <!-- Yeniden Başlat Onay Modalı -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal-content">
+            <h2>Emin misin?</h2>
+            <p>Sayacın sıfırlanacak. Bu işlem geri alınamaz!</p>
+            <div class="modal-buttons">
+                <button id="confirmYes" class="modal-button yes-button">Evet, eminim</button>
+                <button id="confirmNo" class="modal-button no-button">Hayır, vazgeçtim</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Ana İçerik (Gizli Başlar) -->
     <div class="container">
         <!-- Kişisel Sayaç için konumlandırma -->
         <div class="top-counters">
             <p class="counter-item">Denizceme Basma Sayısı: <span id="personalClickCount">0</span></p>
-            <!-- Toplam Basma Sayısı kaldırıldı -->
         </div>
 
         <div class="image-area">
@@ -35,6 +46,6 @@
     </div>
 
     <!-- JavaScript Dosyası -->
-    <script src="script.js"></script> <!-- type="module" kaldırıldı, çünkü Firebase importları silindi -->
+    <script src="script.js"></script>
 </body>
 </html>
