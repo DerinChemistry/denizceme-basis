@@ -26,11 +26,13 @@ body {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8); /* Yarı şeffaf siyah */
-    display: flex;
+    display: flex; /* Varsayılan olarak görünür */
     justify-content: center;
     align-items: center;
     backdrop-filter: blur(8px); /* Blur efekti */
     z-index: 1000; /* En üstte görünmesini sağla */
+    opacity: 1; /* Varsayılan olarak tam görünür */
+    pointer-events: auto; /* Varsayılan olarak tıklanabilir */
     transition: backdrop-filter 0.5s ease-out, opacity 0.5s ease-out;
 }
 
@@ -97,17 +99,15 @@ body {
     display: flex;
 }
 
-/* Sayaçların yeni konumu ve stili */
+/* Sayaçların yeni konumu ve stili (tek sayaç için ortalandı) */
 .top-counters {
     width: 100%;
     display: flex;
-    justify-content: space-between; /* İki yana yasla */
+    justify-content: center; /* Ortalandı */
     padding: 0 20px; /* Yanlardan boşluk */
     box-sizing: border-box;
     font-size: 1.3em; /* Yazı boyutu büyütüldü */
     font-weight: 800; /* Daha da kalın */
-    flex-wrap: wrap; /* Küçük ekranlarda alt alta gelsin */
-    gap: 20px; /* Aralarındaki boşluk artırıldı */
     margin-top: 20px; /* Yukarıdan boşluk */
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.6); /* Parlaklık efekti */
 }
@@ -130,14 +130,14 @@ body {
 }
 
 #denizcemImage {
-    width: 400px; /* Resim boyutu daha da büyütüldü */
-    height: 400px; /* Resim boyutu daha da büyütüldü */
+    max-width: 400px; /* Resmin maksimum genişliği */
+    height: auto;    /* Oranını koru, sıkışmayı engelle */
     border: none; /* Halka tamamen kaldırıldı */
     cursor: pointer;
     transition: transform 0.1s ease-out, box-shadow 0.2s ease; /* Tıklama efekti için */
-    user-select: none; /* Tıklarken seçimi engelle */
-    object-fit: cover; /* Resmin boyutlara sığmasını sağlar */
-    border-radius: 15px; /* Hafif yuvarlak köşeler */
+    user-select: none; /* Mobilde görsel seçmeyi engelle */
+    /* object-fit kaldırıldı, resmin orijinal oranını koruyacak */
+    border-radius: 0; /* Köşeler kare olsun diye kaldırıldı */
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.6); /* Daha belirgin gölge */
 }
 
@@ -206,8 +206,8 @@ body {
         padding: 10px 15px;
     }
     #denizcemImage {
-        width: 280px;
-        height: 280px;
+        max-width: 280px; /* Mobil için maksimum genişlik */
+        height: auto;
         margin-top: 60px; /* Sayaçlar için daha fazla boşluk */
     }
     .message-box h1 {
@@ -222,8 +222,8 @@ body {
 
 @media (max-width: 480px) {
     #denizcemImage {
-        width: 220px;
-        height: 220px;
+        max-width: 220px; /* Daha küçük mobil cihazlar için */
+        height: auto;
         margin-top: 40px;
     }
     .message-box h1 {
