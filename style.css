@@ -130,13 +130,12 @@ body {
 }
 
 #denizcemImage {
-    max-width: 400px; /* Resmin maksimum genişliği */
+    max-width: 500px; /* Resmin maksimum genişliği daha da büyütüldü */
     height: auto;    /* Oranını koru, sıkışmayı engelle */
     border: none; /* Halka tamamen kaldırıldı */
     cursor: pointer;
     transition: transform 0.1s ease-out, box-shadow 0.2s ease; /* Tıklama efekti için */
     user-select: none; /* Mobilde görsel seçmeyi engelle */
-    /* object-fit kaldırıldı, resmin orijinal oranını koruyacak */
     border-radius: 0; /* Köşeler kare olsun diye kaldırıldı */
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.6); /* Daha belirgin gölge */
 }
@@ -191,6 +190,89 @@ body {
     background-color: #e0a800;
 }
 
+/* Onay Modalı Stilleri */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Yarı şeffaf siyah */
+    display: none; /* Başlangıçta gizli */
+    justify-content: center;
+    align-items: center;
+    z-index: 2000; /* En üstte olsun */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.visible {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background-color: #333;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
+    border: 1px solid #666;
+    max-width: 400px;
+    width: 90%;
+    color: #f0f0f0;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    font-size: 1.8em;
+    font-weight: 700;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+.modal-content p {
+    font-size: 1.1em;
+    margin-bottom: 25px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.modal-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 700;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.modal-button.yes-button {
+    background-color: #f44336; /* Kırmızı */
+    color: white;
+}
+
+.modal-button.yes-button:hover {
+    background-color: #da190b;
+    transform: translateY(-2px);
+}
+
+.modal-button.no-button {
+    background-color: #4CAF50; /* Yeşil */
+    color: white;
+}
+
+.modal-button.no-button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+
 /* Duyarlı tasarım */
 @media (max-width: 768px) {
     .top-counters {
@@ -229,7 +311,7 @@ body {
     .message-box h1 {
         font-size: 1em;
     }
-    #startButton, .action-button {
+    #startButton, .action-button, .modal-button {
         padding: 10px 20px;
         font-size: 1em;
     }
