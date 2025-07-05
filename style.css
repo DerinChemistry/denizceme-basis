@@ -127,17 +127,22 @@ body {
     align-items: center;
     flex-grow: 1; /* Ortada kalmasını sağlar */
     padding: 20px 0; /* Üst ve alttan boşluk */
+    width: 100%; /* Resim alanının genişlemesini sağla */
+    height: 100%; /* Resim alanının yüksekliğini esnet */
 }
 
 #denizcemImage {
-    max-width: 500px; /* Resmin maksimum genişliği daha da büyütüldü */
-    height: auto;    /* Oranını koru, sıkışmayı engelle */
+    max-width: 100%; /* Kapsayıcısına sığsın */
+    max-height: 100%; /* Kapsayıcısına sığsın */
+    width: auto;     /* Oranını koru */
+    height: auto;    /* Oranını koru */
     border: none; /* Halka tamamen kaldırıldı */
     cursor: pointer;
     transition: transform 0.1s ease-out, box-shadow 0.2s ease; /* Tıklama efekti için */
     user-select: none; /* Mobilde görsel seçmeyi engelle */
     border-radius: 0; /* Köşeler kare olsun diye kaldırıldı */
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.6); /* Daha belirgin gölge */
+    object-fit: contain; /* Resmin sıkışmadan alana sığmasını sağlar */
 }
 
 #denizcemImage:active {
@@ -198,7 +203,7 @@ body {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.7); /* Yarı şeffaf siyah */
-    display: none; /* Başlangıçta gizli */
+    display: none; /* Başlangıçta gizli olsun */
     justify-content: center;
     align-items: center;
     z-index: 2000; /* En üstte olsun */
