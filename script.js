@@ -5,17 +5,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.querySelector('.container');
     const denizcemImage = document.getElementById('denizcemImage');
     const personalClickCountSpan = document.getElementById('personalClickCount');
-    // const totalClickCountSpan = document.getElementById('totalClickCount'); // Kaldırıldı
     const restartButton = document.getElementById('restartButton');
     const donateButton = document.querySelector('.donate-button'); // Bağış butonu
 
     // Kişisel tıklama sayısını localStorage'dan al (tarayıcı kapansa da kalıcı)
     let personalClickCount = localStorage.getItem('personalClickCountDenizcem') || 0;
     personalClickCountSpan.textContent = personalClickCount;
-
-    // Firebase ile ilgili kodlar kaldırıldı.
-    // const totalClicksRef = ref(database, 'totalClicks'); // Kaldırıldı
-    // onValue(totalClicksRef, (...) => {...}); // Kaldırıldı
 
     // "Başla" butonuna tıklanınca
     startButton.addEventListener('click', () => {
@@ -43,9 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
         personalClickCountSpan.textContent = personalClickCount;
         localStorage.setItem('personalClickCountDenizcem', personalClickCount);
 
-        // Firebase ile ilgili kodlar kaldırıldı.
-        // runTransaction(totalClicksRef, (...) => {...}); // Kaldırıldı
-
         // Tıklama animasyonu
         denizcemImage.style.transform = 'scale(0.97)';
         setTimeout(() => {
@@ -69,9 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
         overlay.style.display = 'flex';
         overlay.classList.remove('hidden'); // Gizli sınıfını kaldır
         overlay.style.pointerEvents = 'auto'; // Tıklama olaylarını tekrar etkinleştir!
-
-        // Küçük bir gecikme ile hidden sınıfını kaldırarak geçiş efektini sağla (zaten kaldırıldı)
-        // setTimeout(() => { overlay.classList.remove('hidden'); }, 10); // Gerek kalmadı
     });
 
     // Sayfa yüklendiğinde, eğer daha önce başlanmışsa overlay'i gizle
@@ -90,4 +79,3 @@ document.addEventListener('DOMContentLoaded', () => {
         container.classList.remove('active');
     }
 });
-
