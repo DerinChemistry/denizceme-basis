@@ -1,21 +1,3 @@
-// Firebase SDK'sını içe aktar
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-// BURAYA KENDİ FIREBASE YAPILANDIRMA KODUNU YAPIŞTIR!
-// Örnek:
-const firebaseConfig = {
-  apiKey: "AIzaSyBqg5uw-53WHdssC5TfFVKkrUI9inw3eRU",
-  authDomain: "denizceme-basis.firebaseapp.com",
-  projectId: "denizceme-basis",
-  storageBucket: "denizceme-basis.firebasestorage.app",
-  messagingSenderId: "278955607022",
-  appId: "1:278955667922:web:75c97de7bdd10858544fF", 
-  databaseURL: "https://denizceme-basis-default-rtdb.firebaseio.com" 
-};
-
-// Firebase SDK importları kaldırıldı, çünkü toplam basma sayısı kaldırıldı.
-
 document.addEventListener('DOMContentLoaded', () => {
     // HTML elementlerini al
     const overlay = document.getElementById('overlay');
