@@ -5,13 +5,13 @@ import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.c
 // BURAYA KENDİ FIREBASE YAPILANDIRMA KODUNU YAPIŞTIR!
 // Örnek:
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID",
-    databaseURL: "YOUR_DATABASE_URL" // Bu satır önemli!
+  apiKey: "AIzaSyBqg5uw-53WHdssC5TfFVKkrUI9inw3eRU",
+  authDomain: "denizceme-basis.firebaseapp.com",
+  projectId: "denizceme-basis",
+  storageBucket: "denizceme-basis.firebasestorage.app",
+  messagingSenderId: "278955607022",
+  appId: "1:278955667922:web:75c97de7bdd10858544fF", 
+  databaseURL: "https://denizceme-basis-default-rtdb.firebaseio.com" 
 };
 
 // Firebase'i başlat
